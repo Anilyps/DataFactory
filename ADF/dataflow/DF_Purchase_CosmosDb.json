@@ -32,7 +32,11 @@
 						"referenceName": "CosmosDbNoSqlPurchaseOrder",
 						"type": "DatasetReference"
 					},
-					"name": "CosmosPurchaseOrder"
+					"name": "CosmosPurchaseOrder",
+					"rejectedDataLinkedService": {
+						"referenceName": "AzureDataLakeStgout",
+						"type": "LinkedServiceReference"
+					}
 				}
 			],
 			"transformations": [
@@ -112,6 +116,8 @@
 				"     partitionKey: ['/cus_id'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
+				"     outputAssertFailedRows: true,",
+				"     assertFailure_fileSystem: 'purhcase',",
 				"     mapColumn(",
 				"          purchase_id,",
 				"          qty,",
