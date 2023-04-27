@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "anil-saini-adf"
+		},
+		"AzureDataLakeStgin_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStgout_accountKey": {
+			"value": ""
+		},
+		"AzureSqlDbanil_connectionString": {
+			"value": ""
+		},
+		"CosmosDbNoSql_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStgin_properties_typeProperties_url": {
+			"value": "https://anilstgin.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStgout_properties_typeProperties_url": {
+			"value": "https://anilstgout.dfs.core.windows.net/"
+		}
+	}
+}

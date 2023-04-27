@@ -1,0 +1,104 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "anil-saini-adf"
+		},
+		"AzureDataLakeStgin_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStgin'"
+		},
+		"AzureDataLakeStgout_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStgout'"
+		},
+		"AzureSqlDbanil_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDbanil'"
+		},
+		"CosmosDbNoSql_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'CosmosDbNoSql'"
+		},
+		"AzureDataLakeStgin_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://anilstgin.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStgout_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://anilstgout.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "anil-saini-adf_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureDataLakeStgin_accountKey": {
+						"value": "[parameters('AzureDataLakeStgin_accountKey')]"
+					},
+					"AzureDataLakeStgout_accountKey": {
+						"value": "[parameters('AzureDataLakeStgout_accountKey')]"
+					},
+					"AzureSqlDbanil_connectionString": {
+						"value": "[parameters('AzureSqlDbanil_connectionString')]"
+					},
+					"CosmosDbNoSql_connectionString": {
+						"value": "[parameters('CosmosDbNoSql_connectionString')]"
+					},
+					"AzureDataLakeStgin_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStgin_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStgout_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStgout_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "anil-saini-adf_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'anil-saini-adf_ArmTemplate_0')]"
+			]
+		}
+	]
+}
