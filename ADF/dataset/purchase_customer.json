@@ -1,0 +1,33 @@
+{
+	"name": "purchase_customer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStgin",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "customer.csv",
+				"fileSystem": "purcase"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "cus_id",
+				"type": "String"
+			},
+			{
+				"name": "cus_name",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

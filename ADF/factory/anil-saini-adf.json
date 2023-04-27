@@ -1,0 +1,9 @@
+{
+	"name": "anil-saini-adf",
+	"location": "southindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "15678e01-292e-42ff-9347-0387d72d0219",
+		"tenantId": "15b396cb-ea65-475e-a38c-4567474d59ad"
+	}
+}

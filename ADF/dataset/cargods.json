@@ -1,0 +1,77 @@
+{
+	"name": "cargods",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStgin",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"sourcefilename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().sourcefilename",
+					"type": "Expression"
+				},
+				"fileSystem": "cargo-ds"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Date",
+				"type": "String"
+			},
+			{
+				"name": "Airport",
+				"type": "String"
+			},
+			{
+				"name": "Flight",
+				"type": "String"
+			},
+			{
+				"name": "Carrier",
+				"type": "String"
+			},
+			{
+				"name": "BusinessDI",
+				"type": "String"
+			},
+			{
+				"name": "AWBBoundID",
+				"type": "String"
+			},
+			{
+				"name": "Origin",
+				"type": "String"
+			},
+			{
+				"name": "Destination",
+				"type": "String"
+			},
+			{
+				"name": "CargoTypeCommoditygroup",
+				"type": "String"
+			},
+			{
+				"name": "CustomerCategory",
+				"type": "String"
+			},
+			{
+				"name": "VolumeTonnage",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

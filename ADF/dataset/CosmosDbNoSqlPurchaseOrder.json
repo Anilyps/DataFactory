@@ -1,0 +1,51 @@
+{
+	"name": "CosmosDbNoSqlPurchaseOrder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "CosmosDbNoSql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "CosmosDbSqlApiCollection",
+		"schema": {
+			"type": "object",
+			"properties": {
+				"purchase_id": {
+					"type": "integer"
+				},
+				"product": {
+					"type": "object",
+					"properties": {
+						"product_id": {
+							"type": "integer"
+						},
+						"product_name": {
+							"type": "string"
+						},
+						"price": {
+							"type": "integer"
+						}
+					}
+				},
+				"qty": {
+					"type": "integer"
+				},
+				"customer": {
+					"type": "object",
+					"properties": {
+						"cus_id": {
+							"type": "integer"
+						},
+						"cus_name": {
+							"type": "string"
+						}
+					}
+				}
+			}
+		},
+		"typeProperties": {
+			"collectionName": "purchase_order"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

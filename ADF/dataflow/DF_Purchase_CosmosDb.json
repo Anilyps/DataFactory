@@ -1,0 +1,128 @@
+{
+	"name": "DF_Purchase_CosmosDb",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "purcase_order",
+						"type": "DatasetReference"
+					},
+					"name": "purcaseorder"
+				},
+				{
+					"dataset": {
+						"referenceName": "purchase_product",
+						"type": "DatasetReference"
+					},
+					"name": "product"
+				},
+				{
+					"dataset": {
+						"referenceName": "purchase_customer",
+						"type": "DatasetReference"
+					},
+					"name": "customer"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "CosmosDbNoSqlPurchaseOrder",
+						"type": "DatasetReference"
+					},
+					"name": "CosmosPurchaseOrder"
+				}
+			],
+			"transformations": [
+				{
+					"name": "OrderProd"
+				},
+				{
+					"name": "OrderProdCust"
+				},
+				{
+					"name": "ColumnProjection"
+				},
+				{
+					"name": "QualityCheck"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          purchase_id as string,",
+				"          product_id as string,",
+				"          qty as string,",
+				"          cus_id as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> purcaseorder",
+				"source(output(",
+				"          product_id as string,",
+				"          product_name as string,",
+				"          price as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> product",
+				"source(output(",
+				"          cus_id as string,",
+				"          cus_name as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> customer",
+				"purcaseorder, product join(purcaseorder@product_id == product@product_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> OrderProd",
+				"OrderProd, customer join(purcaseorder@cus_id == customer@cus_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> OrderProdCust",
+				"OrderProdCust select(mapColumn(",
+				"          purchase_id,",
+				"          qty,",
+				"          product_id = product@product_id,",
+				"          product_name,",
+				"          price,",
+				"          cus_id = customer@cus_id,",
+				"          cus_name",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> ColumnProjection",
+				"ColumnProjection filter(greater(toInteger(qty),0)) ~> QualityCheck",
+				"QualityCheck sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          purchase_id as integer,",
+				"          product as (product_id as integer, product_name as string, price as integer),",
+				"          qty as integer,",
+				"          customer as (cus_id as integer, cus_name as string)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'document',",
+				"     partitionKey: ['/cus_id'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          purchase_id,",
+				"          qty,",
+				"          product_id,",
+				"          product_name,",
+				"          price,",
+				"          cus_id,",
+				"          cus_name,",
+				"          id = purchase_id",
+				"     )) ~> CosmosPurchaseOrder"
+			]
+		}
+	}
+}
