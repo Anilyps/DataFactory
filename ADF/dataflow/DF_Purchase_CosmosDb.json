@@ -105,7 +105,7 @@
 				"          customer as (cus_id as integer, cus_name as string)",
 				"     ),",
 				"     deletable:true,",
-				"     insertable:false,",
+				"     insertable:true,",
 				"     updateable:true,",
 				"     upsertable:true,",
 				"     format: 'document',",
