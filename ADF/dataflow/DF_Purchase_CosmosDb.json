@@ -113,14 +113,13 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",
-				"          purchase_id,",
+				"          id = purchase_id,",
 				"          qty,",
 				"          product_id,",
 				"          product_name,",
 				"          price,",
 				"          cus_id,",
-				"          cus_name,",
-				"          id = purchase_id",
+				"          cus_name",
 				"     )) ~> CosmosPurchaseOrder"
 			]
 		}
