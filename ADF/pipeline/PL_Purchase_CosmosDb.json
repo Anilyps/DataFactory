@@ -1,6 +1,7 @@
 {
 	"name": "PL_Purchase_CosmosDb",
 	"properties": {
+		"description": "This pipeline will send purchase order data to cosmos Db",
 		"activities": [
 			{
 				"name": "Data flow1",
