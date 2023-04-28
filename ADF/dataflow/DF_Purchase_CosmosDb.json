@@ -47,6 +47,9 @@
 				},
 				{
 					"name": "QualityCheck"
+				},
+				{
+					"name": "alterRow1"
 				}
 			],
 			"scriptLines": [
@@ -96,7 +99,8 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> ColumnProjection",
 				"ColumnProjection filter(greater(toInteger(qty),0)) ~> QualityCheck",
-				"QualityCheck sink(allowSchemaDrift: true,",
+				"QualityCheck alterRow(upsertIf(true())) ~> alterRow1",
+				"alterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          purchase_id as integer,",
@@ -104,9 +108,9 @@
 				"          qty as integer,",
 				"          customer as (cus_id as integer, cus_name as string)",
 				"     ),",
-				"     deletable:true,",
-				"     insertable:true,",
-				"     updateable:true,",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
 				"     upsertable:true,",
 				"     format: 'document',",
 				"     partitionKey: ['/cus_id'],",
