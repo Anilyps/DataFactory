@@ -1,0 +1,25 @@
+{
+	"name": "trigger_pl_cosmoDb",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PL_Purchase_CosmosDb",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/purcase/blobs/purchase_order.csv",
+			"blobPathEndsWith": "purchase_order.csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/7af0bde1-6c0b-4c25-9249-fae6a8defebd/resourceGroups/rg-adf/providers/Microsoft.Storage/storageAccounts/anilstgin",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
