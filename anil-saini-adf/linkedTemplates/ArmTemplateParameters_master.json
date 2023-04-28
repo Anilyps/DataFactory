@@ -23,6 +23,9 @@
 		"AzureDataLakeStgout_properties_typeProperties_url": {
 			"value": "https://anilstgout.dfs.core.windows.net/"
 		},
+		"trigger_pl_cosmoDb_properties_typeProperties_scope": {
+			"value": "/subscriptions/7af0bde1-6c0b-4c25-9249-fae6a8defebd/resourceGroups/rg-adf/providers/Microsoft.Storage/storageAccounts/anilstgin"
+		},
 		"containerUri": {
 			"value": ""
 		},
